@@ -1,9 +1,9 @@
 import os
-
 import allure
 import requests
 from dotenv import load_dotenv
 from selene import browser, have
+from utils.utils import response_logging, response_attaching
 
 load_dotenv()
 web_url = os.getenv('URL')
@@ -22,6 +22,8 @@ def test_authorization_with_api(browser_settings):
                                allow_redirects=False
                                )
     assert result.status_code == 302
+    response_logging(result)
+    response_attaching(result)
 
     with allure.step('Получение авторизационной куки'):
         cookie = result.cookies.get('NOPCOMMERCE.AUTH')
