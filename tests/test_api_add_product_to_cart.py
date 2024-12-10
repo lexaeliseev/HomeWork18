@@ -7,8 +7,7 @@ from selene import browser, have
 
 
 load_dotenv()
-web_url = os.getenv('URL')
-api_url = os.getenv('API_URL')
+url = os.getenv('URL')
 login = os.getenv('EMAIL')
 password = os.getenv('PASSWORD')
 
@@ -16,7 +15,7 @@ password = os.getenv('PASSWORD')
 @allure.title('Добавление товара в корзину через API, проверка его отображения на фронте и очистка корзины')
 def test_api_add_product_to_cart(browser_settings):
     with allure.step('Авториизация через API'):
-        authorization = requests.post(url=api_url + '/login',
+        authorization = requests.post(url=url + '/login',
                                       data={'Email': login,
                                             'Password': password,
                                             'RememberMe': 'false'},
@@ -31,7 +30,7 @@ def test_api_add_product_to_cart(browser_settings):
         cookie = authorization.cookies.get('NOPCOMMERCE.AUTH')
 
     with allure.step('Добавление товаров в корзину через API'):
-        response = requests.post(url=api_url + '/addproducttocart/catalog/31/1/1',
+        response = requests.post(url=url + '/addproducttocart/catalog/31/1/1',
                                  cookies={"NOPCOMMERCE.AUTH": cookie})
 
         assert response.status_code == 200
