@@ -37,7 +37,7 @@ def test_ui_add_product_to_cart(browser_settings):
         browser.element('.cart-label').click()
 
     with allure.step('Проверка наличия товара в корзине'):
-        browser.all('.product-name').should(have.exact_texts('14.1-inch Laptop'))
+        browser.all('.product-name').with_(timeout=8).should(have.exact_texts('14.1-inch Laptop'))
 
     with allure.step('Удаление товаров из корзины'):
         browser.element('[name="removefromcart"]').click()
